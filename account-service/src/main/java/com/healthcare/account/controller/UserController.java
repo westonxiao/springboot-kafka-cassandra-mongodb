@@ -36,6 +36,7 @@ public class UserController {
         return userRepository.findById(id).orElse(null);
     }
 
+    @Autowired
     private final RestTemplate restTemplate;
     private final String authServiceUrl = "http://localhost:8081/auth/validate";
 

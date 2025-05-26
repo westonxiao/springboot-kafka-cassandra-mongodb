@@ -1,0 +1,28 @@
+[
+  {
+    "sku": "MED001",
+    "name": "Digital Thermometer",
+    "description": "Fast and accurate temperature measurement",
+    "category": "Medical Devices",
+    "price": 24.99,
+    "stockQuantity": 150,
+    "attributes": {
+      "brand": "Omron",
+      "warranty": "2 years",
+      "color": "white"
+    }
+  },
+  {
+    "sku": "MED002",
+    "name": "Blood Pressure Monitor",
+    "description": "Automatic arm blood pressure machine",
+    "category": "Medical Devices",
+    "price": 59.99,
+    "stockQuantity": 75,
+    "attributes": {
+      "brand": "Withings",
+      "warranty": "3 years",
+      "connectivity": "Bluetooth"
+    }
+  }
+]

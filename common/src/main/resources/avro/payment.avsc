@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "name": "PaymentAvro",
+  "namespace": "com.healthcare.common.avro",
+  "fields": [
+    {"name": "paymentId", "type": "string"},
+    {"name": "orderId", "type": "string"},
+    {"name": "amount", "type": "double"},
+    {"name": "status", "type": "string"},
+    {"name": "timestamp", "type": "string"}
+  ]
+}

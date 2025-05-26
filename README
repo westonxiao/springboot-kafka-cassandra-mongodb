@@ -1,2 +1,65 @@
 This is a demo project to create microservices
 using Spring Boot, Kafka, Cassandra, MySQL and MongoDB
+
+Order Service -- Kafka
+Payment Service -- MySQL
+    --FlywayDB (or just Flyway) is a database migration tool
+    --that helps manage and automate version-controlled schema changes.
+Product Catalog Service -- Cassandra
+User Analytics Service -- Cassandra
+
+healthcare-platform/
+├── pom.xml                          (Parent POM)
+├── common/
+│   ├── pom.xml
+│   └── src/main/java/com/healthcare/common/
+│       └── events/
+│           ├── OrderEvent.java
+│           ├── PaymentEvent.java
+│           └── ProductEvent.java
+├── order-service/
+│   ├── pom.xml
+│   └── src/main/
+│       ├── java/com/healthcare/orders/
+│       │   ├── OrderApplication.java
+│       │   ├── controller/OrderController.java
+│       │   ├── model/Order.java
+│       │   └── service/OrderService.java
+│       └── resources/
+│           ├── application.properties
+│           └── kafka/
+├── payment-service/                  (MySQL)
+│   ├── pom.xml
+│   └── src/main/
+│       ├── java/com/healthcare/payments/
+│       │   ├── PaymentApplication.java
+│       │   ├── model/Payment.java
+│       │   └── repository/PaymentRepository.java
+│       └── resources/
+│           ├── application.properties
+│           └── db/migration/        (Flyway scripts)
+├── catalog-service/                  (Cassandra)
+│   ├── pom.xml
+│   └── src/main/
+│       ├── java/com/healthcare/catalog/
+│       │   ├── CatalogApplication.java
+│       │   ├── model/Product.java
+│       │   └── repository/ProductRepository.java
+│       └── resources/
+│           ├── application.properties
+│           └── cassandra/           (CQL scripts)
+├── analytics-service/                (Cassandra)
+│   ├── pom.xml
+│   └── src/main/
+│       ├── java/com/healthcare/analytics/
+│       │   ├── AnalyticsApplication.java
+│       │   ├── model/UserActivity.java
+│       │   └── service/AnalyticsService.java
+│       └── resources/
+│           └── application.properties
+└── api-gateway/
+    ├── pom.xml
+    └── src/main/
+        ├── java/com/healthcare/gateway/
+        └── resources/
+            └── application.properties

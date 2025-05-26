@@ -57,9 +57,12 @@ healthcare-platform/
 │       │   └── service/AnalyticsService.java
 │       └── resources/
 │           └── application.properties
-└── api-gateway/
-    ├── pom.xml
-    └── src/main/
-        ├── java/com/healthcare/gateway/
-        └── resources/
-            └── application.properties
+│── api-gateway/
+│   ├── pom.xml
+│   └── src/main/
+│       ├── java/com/healthcare/gateway/
+│       └── resources/
+│            └── application.properties
+│            └── service/AnalyticsService.java
+└── auth-services
+└── account-services

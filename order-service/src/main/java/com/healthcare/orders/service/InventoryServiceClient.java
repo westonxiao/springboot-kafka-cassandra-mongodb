@@ -3,8 +3,10 @@ package com.healthcare.orders.service;
 import com.healthcare.orders.model.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
@@ -14,6 +16,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
+import java.util.UUID;
 
 @Component
 public class InventoryServiceClient {
@@ -186,5 +189,18 @@ public class InventoryServiceClient {
         public InventoryReleaseException(String message, Throwable cause) {
             super(message, cause);
         }
+    }
+
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
+
+    public void reserveInventory(Order order) {
+        // Send message to inventory service
+        kafkaTemplate.send("inventory-reserve", order);
+        // In real implementation, you might want to wait for response
+    }
+
+    public void releaseInventory(UUID orderId) {
+        kafkaTemplate.send("inventory-release", orderId);
     }
 }

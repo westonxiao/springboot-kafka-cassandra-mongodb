@@ -6,18 +6,22 @@ import com.healthcare.orders.exception.OrderNotFoundException;
 import com.healthcare.orders.model.Order;
 import com.healthcare.orders.model.OrderStatus;
 import com.healthcare.orders.repository.OrderRepository;
+import org.apache.kafka.clients.producer.KafkaProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @Service
 public class OrderServiceImpl implements OrderService {
     private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
+    @Autowired
     private final OrderRepository orderRepository;
     private final OrderProcessingService orderProcessingService;
     private final OrderEventPublisher orderEventPublisher;
@@ -90,5 +94,22 @@ public class OrderServiceImpl implements OrderService {
 
             logger.info("Successfully cancelled order with ID: {}", id);
         });
+    }
+
+    @Autowired
+    private KafkaProducer kafkaProducer;
+
+    public Order createOrder(Order order) {
+        Order savedOrder = orderRepository.save(order);
+        //kafkaProducer.sendOrderCreatedEvent(savedOrder);
+        return savedOrder;
+    }
+
+    public void cancelOrder(UUID orderId) {
+//        orderRepository.findById(orderId).ifPresent(order -> {
+//            //order.setStatus("CANCELLED");
+//            orderRepository.save(order);
+//            //kafkaProducer.sendOrderCancelledEvent(order);
+//        });
     }
 }

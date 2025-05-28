@@ -3,6 +3,8 @@ package com.healthcare.orders.controller;
 import com.healthcare.orders.dto.OrderRequest;
 import com.healthcare.orders.dto.OrderResponse;
 import com.healthcare.orders.exception.OrderNotFoundException;
+import com.healthcare.orders.model.Order;
+import com.healthcare.orders.service.OrderSagaOrchestrator;
 import com.healthcare.orders.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -11,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -55,6 +58,16 @@ public class OrderController {
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
                 });
     }
+
+    //use saga orchestrator
+    @Autowired
+    private OrderSagaOrchestrator sagaOrchestrator;
+
+    @PostMapping
+    public void createOrder(@RequestBody Order order) {
+        sagaOrchestrator.createOrderSaga(order);
+    }
+
 
     @GetMapping("/{id}")
     public CompletableFuture<ResponseEntity<OrderResponse>> getOrderById(

@@ -65,6 +65,8 @@ public class OrderController {
 
     @PostMapping
     public void createOrder(@RequestBody Order order) {
+        logger.info("Creating order: {}", order);
+
         sagaOrchestrator.createOrderSaga(order);
     }
 
